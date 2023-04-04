@@ -222,6 +222,25 @@ const postOrder = (node, arr=[])=>{
   }
 }
 
+const height = (node, obj={}, count=0)=>{
+  if(node === null){
+    return obj
+  }else{
+    if(node.data !== null){
+      obj[node.data] = {'height':count+1};
+    }
+    height(node.left, obj, count+1);
+    height(node.right, obj, count+1);
+  }
+  let treeHeight = 0;
+  for(let key in obj){
+    if(obj[key]['height']>treeHeight){
+      treeHeight = obj[key]['height'];
+    }
+  }
+  return treeHeight;
+}
+
 const original = removeDuplicates([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 322]);
 const sortedArray = mergeSort(original);
 const tree1 = tree(sortedArray);
@@ -234,9 +253,11 @@ const tree1 = tree(sortedArray);
 // tree1.del(67);
 // // tree1.del(6345);
 prettyPrint(tree1.root);
-console.log(tree1.levelOrder(tree1.getValues));
-console.log(inOrder(tree1.root));
-console.log(postOrder(tree1.root));
+console.log(height(tree1.root));
+
+// console.log(tree1.levelOrder(tree1.getValues));
+// console.log(inOrder(tree1.root));
+// console.log(postOrder(tree1.root));
 
 // const myTree = tree1.root;
 // console.log(printTree(myTree));
