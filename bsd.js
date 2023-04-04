@@ -1,4 +1,5 @@
 import mergeSort from './merge.js';
+import generateRandomNumbers from './randomNumbers.js';
 
 let node = (data, left, right)=>{
   return {data:null, left:null, right:null};
@@ -115,7 +116,7 @@ let tree = ()=>{
     return Obj;
   }
 
-function levelOrder(getVal){
+function levelOrder(getVal, root){
   let values = [];
   let nodeValues = [];
   values.push(root);
@@ -258,7 +259,7 @@ const isBalanced = (node)=>{
     }
   }
   
-  if((leftSideHeight(node) - rightSideHeight(node)) < 1){
+  if((rightSideHeight(node)-leftSideHeight(node)) < 2){
     return true;
   }else{
     return false;
@@ -273,26 +274,23 @@ const reBalance = (node)=>{
   return balancedTree;
 }
 
-const original = removeDuplicates([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 322]);
+const original = removeDuplicates(generateRandomNumbers(15));
 const sortedArray = mergeSort(original);
 const tree1 = tree();
 let root = tree1.buildTree(sortedArray);
-// tree1.del(4);
-// tree1.del(322);
-// tree1.del(324);
-// tree1.del(5);
-// tree1.del(9);
-// tree1.del(1);
-// tree1.del(67);
-// // tree1.del(6345);
+
 prettyPrint(root);
-// console.log(height(tree1.root));
-// console.log(isBalanced(tree1.root));
-reBalance(root);
-
-// console.log(tree1.levelOrder(tree1.getValues));
-// console.log(inOrder(tree1.root));
-// console.log(postOrder(tree1.root));
-
-// const myTree = tree1.root;
-// console.log(printTree(myTree));
+console.log(`isBalanced: ${isBalanced(root)}`);
+console.log(`preorder: ${printTree(root)}\ninorder: ${inOrder(root)}\npostorder: ${postOrder(root)}`);
+tree1.insert(111, root);
+tree1.insert(102, root);
+tree1.insert(123, root);
+tree1.insert(199, root);
+tree1.insert(150, root);
+prettyPrint(root);
+console.log(`isBalanced: ${isBalanced(root)}`);
+let rebalancedTree = reBalance(root);
+prettyPrint(rebalancedTree);
+console.log(`isBalanced: ${isBalanced(rebalancedTree)}`);
+console.log(`level-order: ${tree1.levelOrder(tree1.getValues, rebalancedTree)}\n
+preorder: ${printTree(rebalancedTree)}\ninorder: ${inOrder(rebalancedTree)}\npostorder: ${postOrder(rebalancedTree)}`);
