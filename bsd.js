@@ -241,6 +241,30 @@ const height = (node, obj={}, count=0)=>{
   return treeHeight;
 }
 
+const isBalanced = (node)=>{
+  const leftSideHeight = (node,left=0)=>{
+    if(node === null){
+      return left-1;
+    }else{
+      return leftSideHeight(node.left, left+1);
+    }
+  }
+
+  const rightSideHeight = (node,right=0)=>{
+    if(node === null){
+      return right-1;
+    }else{
+      return rightSideHeight(node.right, right+1);
+    }
+  }
+  
+  if((leftSideHeight(node) - rightSideHeight(node)) < 1){
+    return true;
+  }else{
+    return false;
+  }
+}
+
 const original = removeDuplicates([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 322]);
 const sortedArray = mergeSort(original);
 const tree1 = tree(sortedArray);
@@ -253,7 +277,8 @@ const tree1 = tree(sortedArray);
 // tree1.del(67);
 // // tree1.del(6345);
 prettyPrint(tree1.root);
-console.log(height(tree1.root));
+// console.log(height(tree1.root));
+console.log(isBalanced(tree1.root));
 
 // console.log(tree1.levelOrder(tree1.getValues));
 // console.log(inOrder(tree1.root));
